@@ -1,5 +1,7 @@
 import "./App.css";
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
 
 class Timer extends React.Component {
   constructor(props) {
@@ -21,6 +23,11 @@ class Timer extends React.Component {
               <button id="timer">05:24</button>
               <span></span>
               <span></span>
+            </div>
+            <div className="btns">
+              <button className="play">
+                <FontAwesomeIcon icon={faPlay} />
+              </button>
             </div>
           </div>
         </div>
