@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./stylesheets/styles.js";
-import Timer from "./Timer";
-import reportWebVitals from './reportWebVitals';
+import Pomodoro from "./Pomodoro";
+import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Timer />
+    <Pomodoro />
   </React.StrictMode>
 );
 
