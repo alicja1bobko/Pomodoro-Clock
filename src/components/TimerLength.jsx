@@ -11,14 +11,23 @@ export class TimerLength extends Component {
             {this.props.title}
           </span>
           <span className="field-value" id={this.props.lengthID}>
-            {" "}
             {this.props.length} min
           </span>
           <div className="arrow-btns">
-            <button id={this.props.minID} className="arrow-btn">
+            <button
+              id={this.props.minID}
+              className="arrow-btn"
+              onClick={this.props.onClick}
+              value="increment"
+            >
               <FontAwesomeIcon icon={faChevronUp} />
             </button>
-            <button id={this.props.maxID} className="arrow-btn">
+            <button
+              id={this.props.maxID}
+              className="arrow-btn"
+              onClick={this.props.onClick}
+              value="decrement"
+            >
               <FontAwesomeIcon icon={faChevronDown} />
             </button>
           </div>
