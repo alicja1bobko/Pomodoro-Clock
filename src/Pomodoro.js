@@ -1,8 +1,8 @@
 import "./App.css";
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faRotate } from "@fortawesome/free-solid-svg-icons";
+
 import TimerLength from "./components/TimerLength";
+import Timer from "./components/Timer";
 
 class Pomodoro extends React.Component {
   constructor(props) {
@@ -34,24 +34,7 @@ class Pomodoro extends React.Component {
               lengthID="break-length"
             />
 
-            <div className="bcg circle">
-              <div className="outer animated circle"></div>
-              <div className="inner animated "></div>
-              <div className="indicator"></div>
-              <button id="time-left">05:24</button>
-            </div>
-            <div className="btns">
-              <button className="play">
-                {this.state.pause ? (
-                  <FontAwesomeIcon icon={faPause} />
-                ) : (
-                  <FontAwesomeIcon icon={faPlay} />
-                )}
-              </button>
-              <button className="reset">
-                <FontAwesomeIcon icon={faRotate} />
-              </button>
-            </div>
+            <Timer pause={this.state.pause} />
           </div>
         </div>
       </div>
