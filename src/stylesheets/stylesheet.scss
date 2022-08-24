@@ -175,7 +175,7 @@ background: #26253f;
 
 // btns
 
-.btns :is(.play, .reset){
+.btns :is(#play, #reset, #pause){
     margin: 0 8px;
     height: 65px;
     width: 65px;
@@ -188,7 +188,7 @@ background: #26253f;
     0 0 20px 1px rgba(102,78,255, 0.5),  /*glow */ 
 }
 
-:is(.play, .reset) :nth-child(1){
+:is(#play, #reset, #pause) :nth-child(1){
     color: white;
     font-size: 23px;
 }

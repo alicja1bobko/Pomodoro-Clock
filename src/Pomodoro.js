@@ -16,53 +16,62 @@ class Pomodoro extends React.Component {
       timerType: "session",
     };
     this.intervalID = null;
+    this.beepRef = React.createRef();
     this.displayTime = this.displayTime.bind(this);
     this.setSessionLength = this.setSessionLength.bind(this);
     this.setBreakLength = this.setBreakLength.bind(this);
     this.handleLengthControl = this.handleLengthControl.bind(this);
-    this.controlClock = this.controlClock.bind(this);
+    this.play = this.play.bind(this);
     this.decrementTimer = this.decrementTimer.bind(this);
     this.controlPhase = this.controlPhase.bind(this);
     this.switchTimerLength = this.switchTimerLength.bind(this);
+    this.reset = this.reset.bind(this);
+    this.beep = this.beep.bind(this);
+    this.pause = this.pause.bind(this);
   }
 
-  controlClock() {
-    //start stop timer
-    if (this.state.pause) {
-      this.intervalID = setInterval(() => {
-        this.decrementTimer();
-        this.controlPhase();
-      }, 1000);
-      this.setState({
-        pause: false,
-      });
-    } else {
-      clearInterval(this.intervalID);
-      this.setState({
-        pause: true,
-      });
-    }
+  play() {
+    this.intervalID = setInterval(() => {
+      this.decrementTimer();
+      this.controlPhase();
+    }, 1000);
+    this.setState({
+      pause: false,
+    });
+  }
+
+  pause() {
+    clearInterval(this.intervalID);
+    this.setState({
+      pause: true,
+    });
   }
 
   controlPhase() {
     let timer = this.state.timer;
-
     if (timer <= 0) {
       clearInterval(this.intervalID);
+      this.beep();
       if (this.state.timerType === "session") {
-        this.controlClock();
         this.switchTimerLength(this.state.breakLength * 60, "break");
+        this.play();
       } else {
-        this.controlClock();
+        this.play();
         this.switchTimerLength(this.state.sessionLength * 60, "session");
       }
     }
+  }
+
+  beep() {
+    this.beepRef.current.volume = 0.1;
+    this.beepRef.current.play();
   }
 
   switchTimerLength(t, name) {
     this.setState({
       timer: t,
       timerType: name,
+      pause: true,
     });
   }
 
@@ -122,6 +131,19 @@ class Pomodoro extends React.Component {
     return minutes + ":" + seconds;
   }
 
+  reset() {
+    this.setState({
+      pause: true,
+      breakLength: 5,
+      sessionLength: 25,
+      timer: 1500,
+      timerType: "session",
+    });
+    clearInterval(this.intervalID);
+    this.beepRef.current.pause();
+    this.beepRef.current.currentTime = 0;
+  }
+
   render() {
     return (
       <div className="app centered container-fluid">
@@ -149,16 +171,24 @@ class Pomodoro extends React.Component {
 
             <Timer pause={this.state.pause} timeLeft={this.displayTime()} />
             <div className="btns">
-              <button className="play">
-                <FontAwesomeIcon
-                  icon={this.state.pause ? faPlay : faPause}
-                  onClick={this.controlClock}
-                />
-              </button>
-              <button className="reset">
+              {this.state.pause ? (
+                <button id="play" onClick={this.play}>
+                  <FontAwesomeIcon icon={faPlay} />
+                </button>
+              ) : (
+                <button id="pause" onClick={this.pause}>
+                  <FontAwesomeIcon icon={faPause} />
+                </button>
+              )}
+
+              <button id="reset" onClick={this.reset}>
                 <FontAwesomeIcon icon={faRotate} />
               </button>
             </div>
+            <audio
+              ref={this.beepRef}
+              src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+            />
           </div>
         </div>
       </div>
