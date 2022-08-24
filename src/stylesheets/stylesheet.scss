@@ -8,6 +8,7 @@
 --field: #2c2c3e;
 --field-title: #a1a1a7;
 --field-value: #c3c3c7;
+--time-value: 0;
 
 }
 #root,body, html {
@@ -111,9 +112,10 @@ padding-bottom: 1rem;
 .bcg{
   position: relative;
   margin: 2rem 0 1rem 0;
-background: #26253f;
+    background: #26253f;
     box-shadow: 0 0 10px 5px rgba(38,37,63, 0.2);
-  
+
+
 }
 .circle{
   height: 300px;
@@ -121,10 +123,12 @@ background: #26253f;
   border-radius: 50%;
 }
 
-// .outer{
-//     z-index: 3;
-//     background-color: rgba(49,48,83, 1);
-// }
+.outer{
+    z-index: 3;
+    // background-color: rgba(49,48,83, 1);
+    background: conic-gradient(rgba(49,48,83, 1) calc(var(--time-value)*1%), transparent 0%);
+}
+
 
 .inner{
     position: absolute;
@@ -135,7 +139,19 @@ background: #26253f;
     width: 245px;
     border-radius: 50%;
     // background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
-    background: linear-gradient(rgba(82,76,239, 0.2), rgba(82,76,239, 1) );
+    background: conic-gradient(rgba(82,76,239, 1) calc(var(--time-value)*1%),  transparent 0%);
+}
+
+.indicator-path{
+	position: relative;
+    height: 245px;
+    width: 245px;
+	border: 1px solid yellow;
+    top: -272px;
+    left: 28px;
+	border-radius: 50%;
+	transform: rotate(50deg);
+	transition: transform 0.7s linear;
 }
 
 .indicator{
@@ -145,11 +161,11 @@ background: #26253f;
     border-radius: 50%;
     border: 4px solid  rgba(82,76,239, 1);
     background-color: #f1f1f1;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3;
     box-shadow: 0 0 7px 1px rgba(32,18,77, 0.8);;
+    top: 0px;
+    left: 110px;
+    transform: rotate(-50deg);
+    z-index: 10;
 }
 
 #time-left{

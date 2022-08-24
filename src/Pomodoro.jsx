@@ -5,6 +5,8 @@ import { faPlay, faPause, faRotate } from "@fortawesome/free-solid-svg-icons";
 import TimerLength from "./components/TimerLength";
 import Timer from "./components/Timer";
 
+const _O = document.documentElement;
+
 class Pomodoro extends React.Component {
   constructor(props) {
     super(props);
@@ -28,12 +30,24 @@ class Pomodoro extends React.Component {
     this.reset = this.reset.bind(this);
     this.beep = this.beep.bind(this);
     this.pause = this.pause.bind(this);
+    this.timerAnimation = this.timerAnimation.bind(this);
+  }
+
+  timerAnimation() {
+    let newValue;
+    if (this.state.timerType === "session") {
+      newValue = (this.state.timer / (this.state.sessionLength * 60)) * 100;
+    } else {
+      newValue = (this.state.timer / (this.state.breakLength * 60)) * 100;
+    }
+    _O.style.setProperty("--time-value", 100 - newValue);
   }
 
   play() {
     this.intervalID = setInterval(() => {
       this.decrementTimer();
       this.controlPhase();
+      this.timerAnimation();
     }, 1000);
     this.setState({
       pause: false,
@@ -142,6 +156,7 @@ class Pomodoro extends React.Component {
     clearInterval(this.intervalID);
     this.beepRef.current.pause();
     this.beepRef.current.currentTime = 0;
+    _O.style.setProperty("--time-value", 0);
   }
 
   render() {
