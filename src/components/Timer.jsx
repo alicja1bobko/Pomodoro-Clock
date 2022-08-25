@@ -8,10 +8,10 @@ export default class Timer extends Component {
         <div className="bcg circle">
           <div className="outer circle"></div>
           <div className="inner "></div>
+          <button id="time-left">{this.props.timeLeft}</button>
           <div className="indicator-path">
             <div className="indicator"></div>
           </div>
-          <button id="time-left">{this.props.timeLeft}</button>
         </div>
       </>
     );
